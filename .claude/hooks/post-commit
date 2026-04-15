@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# post-commit: [태그] 커밋 시 CHANGELOG + SESSION 자동 갱신. 차단 없음.
+
+set -uo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+MSG="$(git log -1 --pretty=%s)"
+HASH="$(git log -1 --pretty=%h)"
+DATE="$(date +%Y-%m-%d)"
+
+# 태그 추출: [Feat], [Fix], [Refactor], [Style], [Docs], [Test], [Chore], [CI]
+if [[ "$MSG" =~ ^\[(Feat|Fix|Refactor|Style|Docs|Test|Chore|CI)\] ]]; then
+  TAG="${BASH_REMATCH[1]}"
+
+  # CHANGELOG 프리펜드 — 가장 단순한 구조: 시간순 역순 flat list
+  CHANGELOG="$REPO_ROOT/CHANGELOG.md"
+  if [[ ! -f "$CHANGELOG" ]]; then
+    {
+      echo "# Changelog"
+      echo ""
+      echo "이 프로젝트의 변경 이력. \`[태그]\` 커밋에 대해 \`post-commit\` 훅이 자동 기록."
+      echo ""
+    } > "$CHANGELOG"
+  fi
+
+  # 제목 추출: "[Tag] - body" 또는 "[Tag] body" 양쪽 지원
+  BODY="$(echo "$MSG" | sed -E "s/^\[$TAG\][[:space:]]*-?[[:space:]]*//")"
+  ENTRY="- \`$DATE\` **[$TAG]** $BODY (\`$HASH\`)"
+
+  # 첫 4줄(헤더+설명) 뒤에 entry 삽입
+  TMP="$(mktemp)"
+  {
+    head -4 "$CHANGELOG"
+    echo "$ENTRY"
+    tail -n +5 "$CHANGELOG"
+  } > "$TMP"
+  mv "$TMP" "$CHANGELOG"
+
+  # SESSION.md 갱신 — 최근 5개 커밋 유지, 50줄 한계
+  SESSION="$REPO_ROOT/.claude/context/SESSION.md"
+  mkdir -p "$(dirname "$SESSION")"
+  {
+    echo "# SESSION — $(date '+%Y-%m-%d %H:%M')"
+    echo ""
+    echo "## 최근 커밋"
+    git log -5 --pretty="- %h %s" 2>/dev/null
+    echo ""
+    echo "## 브랜치"
+    echo "- 현재: $(git branch --show-current)"
+    echo ""
+    echo "## 다음 작업"
+    echo "- (세션 종료 시 수동 갱신)"
+  } > "$SESSION"
+
+  echo "[post-commit] CHANGELOG + SESSION 갱신 완료 ([$TAG])"
+fi
+
+exit 0

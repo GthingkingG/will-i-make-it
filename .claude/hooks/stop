@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# stop: Claude Code 세션 종료 시 스냅샷. 차단 없음.
+
+set -uo pipefail
+
+REPO_ROOT="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
+cd "$REPO_ROOT"
+
+TS="$(date +%Y%m%d-%H%M%S)"
+LOG_DIR="$REPO_ROOT/.claude/context"
+mkdir -p "$LOG_DIR"
+LOG="$LOG_DIR/session-$TS.log"
+
+{
+  echo "# Session end — $(date '+%Y-%m-%d %H:%M:%S')"
+  echo ""
+  echo "## git status"
+  git status --short 2>&1 || echo "(no git)"
+  echo ""
+  echo "## 현재 브랜치"
+  git branch --show-current 2>&1 || echo "(unknown)"
+  echo ""
+  echo "## 최근 3개 커밋"
+  git log -3 --pretty="%h %s (%ar)" 2>&1 || echo "(no log)"
+  echo ""
+  echo "## 변경된 파일 (uncommitted)"
+  git diff --stat 2>&1 | tail -20 || true
+} > "$LOG"
+
+# 마지막 5개만 유지
+ls -1t "$LOG_DIR"/session-*.log 2>/dev/null | tail -n +6 | xargs -I {} rm -f {} 2>/dev/null || true
+
+exit 0

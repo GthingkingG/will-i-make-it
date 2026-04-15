@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# pre-commit: 변경 파일만 대상. dart format 차단 + flutter analyze 에러만 차단.
+# 경고/info는 표시만 하고 통과.
+
+set -uo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+# 변경된 dart 파일만 수집 (staged + ACM 필터). macOS bash 3.2 호환 — mapfile 대신 while-read
+CHANGED_DART=()
+while IFS= read -r f; do
+  [[ -n "$f" ]] && CHANGED_DART+=("$f")
+done < <(git diff --cached --name-only --diff-filter=ACM | grep -E '\.dart$' || true)
+
+if [[ ${#CHANGED_DART[@]} -eq 0 ]]; then
+  exit 0
+fi
+
+echo "[pre-commit] checking ${#CHANGED_DART[@]} dart file(s)..."
+
+# 1. dart format — 불일치 시 차단
+if ! command -v dart >/dev/null 2>&1; then
+  echo "⚠️  dart not in PATH, skipping format check"
+elif ! dart format --set-exit-if-changed --output=none "${CHANGED_DART[@]}" >/dev/null; then
+  echo ""
+  echo "❌ dart format 불일치. 다음 명령으로 고친 후 재커밋:"
+  echo "   dart format ${CHANGED_DART[*]}"
+  exit 1
+fi
+
+# 2. flutter analyze — 에러만 차단 (경고/info 통과)
+if ! command -v flutter >/dev/null 2>&1; then
+  echo "⚠️  flutter not in PATH, skipping analyze"
+  exit 0
+fi
+ANALYZE_OUT="$(flutter analyze --no-pub 2>&1 || true)"
+ERROR_COUNT="$(echo "$ANALYZE_OUT" | grep -cE '^\s*error\s+•' || true)"
+WARN_COUNT="$(echo "$ANALYZE_OUT" | grep -cE '^\s*warning\s+•' || true)"
+
+if [[ "$ERROR_COUNT" -gt 0 ]]; then
+  echo ""
+  echo "❌ flutter analyze — $ERROR_COUNT 에러 발견. 커밋 차단."
+  echo "$ANALYZE_OUT" | grep -E '^\s*error\s+•' | head -20
+  echo ""
+  echo "전체 확인: flutter analyze"
+  exit 1
+fi
+
+if [[ "$WARN_COUNT" -gt 0 ]]; then
+  echo "⚠️  flutter analyze — $WARN_COUNT 경고 (통과)"
+fi
+
+exit 0
