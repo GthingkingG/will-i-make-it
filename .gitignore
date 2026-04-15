@@ -1,0 +1,68 @@
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+pubspec.lock.bak
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+.metadata
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Generated.xcconfig
+ios/Runner.xcworkspace/xcshareddata/
+ios/Runner/GeneratedPluginRegistrant.*
+*.xcuserstate
+*.xcworkspacedata
+DerivedData/
+
+# Android
+android/.gradle/
+android/captures/
+android/gradlew
+android/gradlew.bat
+android/local.properties
+android/**/GeneratedPluginRegistrant.java
+android/key.properties
+**/*.keystore
+**/*.jks
+
+# Secrets / env
+.env
+.env.*
+!.env.example
+*.p8
+*.p12
+AuthKey_*
+google-play-service-account.json
+fastlane/.env
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/README.md
+
+# macOS
+.DS_Store
+
+# Supabase
+.supabase/
+supabase/.temp/
+
+# Vercel
+.vercel/
+.next/
+node_modules/
