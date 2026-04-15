@@ -13,6 +13,9 @@ class HardcodedShuttleRepository implements ShuttleRepository {
     required double longitude,
     required DateTime now,
   }) async {
+    if (!isWithinServicePeriod(now)) {
+      return null;
+    }
     if (now.weekday == DateTime.saturday || now.weekday == DateTime.sunday) {
       return null;
     }

@@ -70,6 +70,51 @@ void main() {
       expect(result!.nextDeparture, DateTime(2026, 4, 16, 15, 40));
     });
 
+    test('returns null before service period (2026-03-31)', () async {
+      final result = await repo.findNextDeparture(
+        latitude: jiseokmyoLat,
+        longitude: jiseokmyoLng,
+        now: DateTime(2026, 3, 31, 9),
+      );
+      expect(result, isNull);
+    });
+
+    test('returns schedule on first service day (2026-04-01 Wed)', () async {
+      final result = await repo.findNextDeparture(
+        latitude: jiseokmyoLat,
+        longitude: jiseokmyoLng,
+        now: DateTime(2026, 4, 1, 9),
+      );
+      expect(result, isNotNull);
+    });
+
+    test('returns schedule on last service day (2026-06-22 Mon)', () async {
+      final result = await repo.findNextDeparture(
+        latitude: jiseokmyoLat,
+        longitude: jiseokmyoLng,
+        now: DateTime(2026, 6, 22, 9),
+      );
+      expect(result, isNotNull);
+    });
+
+    test('returns null after service period (2026-06-23)', () async {
+      final result = await repo.findNextDeparture(
+        latitude: jiseokmyoLat,
+        longitude: jiseokmyoLng,
+        now: DateTime(2026, 6, 23, 9),
+      );
+      expect(result, isNull);
+    });
+
+    test('returns null during summer break (2026-08-15)', () async {
+      final result = await repo.findNextDeparture(
+        latitude: jiseokmyoLat,
+        longitude: jiseokmyoLng,
+        now: DateTime(2026, 8, 15, 9),
+      );
+      expect(result, isNull);
+    });
+
     test('returns null on Saturday (no weekend service)', () async {
       final result = await repo.findNextDeparture(
         latitude: jiseokmyoLat,
