@@ -114,63 +114,66 @@ class _LocationCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Card(
         margin: EdgeInsets.zero,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    color: theme.colorScheme.primary,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      l10n.settingsLocationStatusHeader,
-                      style: theme.textTheme.titleMedium,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          key: const ValueKey('settings-location-card'),
+          onTap: () async {
+            await cubit.openSystemSettings();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.location_on_outlined,
+                      color: theme.colorScheme.primary,
                     ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        l10n.settingsLocationStatusHeader,
+                        style: theme.textTheme.titleMedium,
+                      ),
+                    ),
+                    Icon(
+                      Icons.chevron_right,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  l10n.settingsLocationDescription,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Text(
+                      statusText,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: statusColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+                if (canRequest) ...[
+                  const SizedBox(height: 16),
+                  FilledButton.icon(
+                    key: const ValueKey('settings-request-permission'),
+                    onPressed: cubit.requestPermission,
+                    icon: const Icon(Icons.lock_open),
+                    label: Text(l10n.settingsLocationActionRequest),
                   ),
                 ],
-              ),
-              const SizedBox(height: 12),
-              Text(
-                l10n.settingsLocationDescription,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Text(
-                    statusText,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: statusColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              if (canRequest)
-                FilledButton.icon(
-                  key: const ValueKey('settings-request-permission'),
-                  onPressed: cubit.requestPermission,
-                  icon: const Icon(Icons.lock_open),
-                  label: Text(l10n.settingsLocationActionRequest),
-                )
-              else if (status != LocationPermissionStatus.granted)
-                FilledButton.icon(
-                  key: const ValueKey('settings-open-os'),
-                  onPressed: () async {
-                    await cubit.openSystemSettings();
-                  },
-                  icon: const Icon(Icons.settings),
-                  label: Text(l10n.settingsLocationActionOpenSettings),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

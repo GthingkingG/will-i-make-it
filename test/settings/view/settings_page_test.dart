@@ -29,7 +29,7 @@ void main() {
     location = _MockLocationService();
   });
 
-  testWidgets('renders "허용됨" and no action button when granted', (
+  testWidgets('renders "허용됨" and no request button when granted', (
     tester,
   ) async {
     when(location.checkPermission).thenAnswer(
@@ -46,7 +46,11 @@ void main() {
       find.byKey(const ValueKey('settings-request-permission')),
       findsNothing,
     );
-    expect(find.byKey(const ValueKey('settings-open-os')), findsNothing);
+    // 카드 자체는 항상 tappable
+    expect(
+      find.byKey(const ValueKey('settings-location-card')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('renders "거부됨" and "권한 요청" button when denied', (tester) async {
@@ -68,7 +72,7 @@ void main() {
   });
 
   testWidgets(
-    'renders "영구 거부됨" and "OS 설정 열기" when permanently denied',
+    'renders "영구 거부됨" and no inline button when permanently denied',
     (tester) async {
       when(location.checkPermission).thenAnswer(
         (_) async => LocationPermissionStatus.deniedForever,
@@ -80,27 +84,51 @@ void main() {
       await tester.pump();
 
       expect(find.text('영구 거부됨'), findsOneWidget);
-      expect(find.byKey(const ValueKey('settings-open-os')), findsOneWidget);
-      expect(find.text('OS 설정 열기'), findsOneWidget);
-    },
-  );
-
-  testWidgets(
-    'renders "위치 서비스 꺼짐" and "OS 설정 열기" when service disabled',
-    (tester) async {
-      when(location.checkPermission).thenAnswer(
-        (_) async => LocationPermissionStatus.serviceDisabled,
+      // deniedForever는 카드 탭으로만 OS 설정 열림 (별도 버튼 없음)
+      expect(
+        find.byKey(const ValueKey('settings-request-permission')),
+        findsNothing,
       );
-      final cubit = SettingsCubit(locationService: location);
-      await cubit.refresh();
-
-      await tester.pumpWidget(_harness(cubit));
-      await tester.pump();
-
-      expect(find.text('위치 서비스 꺼짐'), findsOneWidget);
-      expect(find.byKey(const ValueKey('settings-open-os')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('settings-location-card')),
+        findsOneWidget,
+      );
     },
   );
+
+  testWidgets('renders "위치 서비스 꺼짐" when service disabled', (tester) async {
+    when(location.checkPermission).thenAnswer(
+      (_) async => LocationPermissionStatus.serviceDisabled,
+    );
+    final cubit = SettingsCubit(locationService: location);
+    await cubit.refresh();
+
+    await tester.pumpWidget(_harness(cubit));
+    await tester.pump();
+
+    expect(find.text('위치 서비스 꺼짐'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('settings-location-card')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('tapping card calls openSystemSettings', (tester) async {
+    when(location.checkPermission).thenAnswer(
+      (_) async => LocationPermissionStatus.granted,
+    );
+    when(location.openSystemSettings).thenAnswer((_) async => true);
+    final cubit = SettingsCubit(locationService: location);
+    await cubit.refresh();
+
+    await tester.pumpWidget(_harness(cubit));
+    await tester.pump();
+
+    await tester.tap(find.byKey(const ValueKey('settings-location-card')));
+    await tester.pumpAndSettle();
+
+    verify(location.openSystemSettings).called(1);
+  });
 
   testWidgets('requestPermission wired to the "권한 요청" button', (
     tester,
