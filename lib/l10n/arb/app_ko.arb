@@ -1,26 +1,26 @@
 {
-    "@@locale": "en",
+    "@@locale": "ko",
     "homeTitle": "Will I make it?",
     "@homeTitle": {
         "description": "App bar title on the home screen"
     },
-    "homeProbabilityLabel": "Boarding probability",
+    "homeProbabilityLabel": "탑승 가능 확률",
     "@homeProbabilityLabel": {
         "description": "Label beside the probability ring"
     },
-    "homeOutcomeMakeIt": "You'll make the next shuttle at your normal walking pace",
+    "homeOutcomeMakeIt": "평소 걸음 속도면 다음 셔틀 탑승 가능",
     "@homeOutcomeMakeIt": {
         "description": "Verdict text shown when probability >= 0.5"
     },
-    "homeOutcomeMissIt": "Likely to miss the next shuttle",
+    "homeOutcomeMissIt": "다음 셔틀 놓칠 가능성 높음",
     "@homeOutcomeMissIt": {
         "description": "Verdict text shown when probability < 0.5"
     },
-    "homeFallbackTitle": "Next shuttle",
+    "homeFallbackTitle": "다음 셔틀",
     "@homeFallbackTitle": {
         "description": "Title of the fallback schedule card"
     },
-    "homeFallbackMinutes": "Departs in {minutes} min",
+    "homeFallbackMinutes": "{minutes}분 뒤 출발",
     "@homeFallbackMinutes": {
         "description": "Minutes until the next shuttle departs",
         "placeholders": {
@@ -29,23 +29,23 @@
             }
         }
     },
-    "homeGpsInaccurateBadge": "GPS inaccurate",
+    "homeGpsInaccurateBadge": "GPS 부정확",
     "@homeGpsInaccurateBadge": {
         "description": "Badge shown when GPS accuracy is > 50m"
     },
-    "homePermissionDeniedTitle": "Location permission required",
+    "homePermissionDeniedTitle": "위치 권한 필요",
     "@homePermissionDeniedTitle": {
         "description": "Title of the permission-denied screen"
     },
-    "homePermissionDeniedBody": "We need your location to estimate distance to the shuttle stop and your boarding probability.",
+    "homePermissionDeniedBody": "현재 위치에서 셔틀까지의 거리와 탑승 확률을 계산하려면 위치 권한이 필요합니다.",
     "@homePermissionDeniedBody": {
         "description": "Body copy explaining why location is needed"
     },
-    "homePermissionRequestButton": "Open permission settings",
+    "homePermissionRequestButton": "권한 설정 열기",
     "@homePermissionRequestButton": {
         "description": "Button to open app settings"
     },
-    "homeNoShuttlesToday": "No more shuttles today",
+    "homeNoShuttlesToday": "오늘 남은 셔틀 없음",
     "@homeNoShuttlesToday": {
         "description": "Shown when no upcoming shuttle departures today"
     }
