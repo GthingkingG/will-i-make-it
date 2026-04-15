@@ -38,23 +38,10 @@ if [[ "$MSG" =~ ^\[(Feat|Fix|Refactor|Style|Docs|Test|Chore|CI)\] ]]; then
   } > "$TMP"
   mv "$TMP" "$CHANGELOG"
 
-  # SESSION.md 갱신 — 최근 5개 커밋 유지, 50줄 한계
-  SESSION="$REPO_ROOT/.claude/context/SESSION.md"
-  mkdir -p "$(dirname "$SESSION")"
-  {
-    echo "# SESSION — $(date '+%Y-%m-%d %H:%M')"
-    echo ""
-    echo "## 최근 커밋"
-    git log -5 --pretty="- %h %s" 2>/dev/null
-    echo ""
-    echo "## 브랜치"
-    echo "- 현재: $(git branch --show-current)"
-    echo ""
-    echo "## 다음 작업"
-    echo "- (세션 종료 시 수동 갱신)"
-  } > "$SESSION"
+  # SESSION.md는 자동생성하지 않음 — /session-end 스킬로 수동 관리
+  # (이전 버전은 매 커밋마다 SESSION.md를 덮어써서 세션 핸드오프 메모가 소실됨)
 
-  echo "[post-commit] CHANGELOG + SESSION 갱신 완료 ([$TAG])"
+  echo "[post-commit] CHANGELOG 갱신 완료 ([$TAG])"
 fi
 
 exit 0
