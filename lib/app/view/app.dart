@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:will_i_make_it/home/home.dart';
 import 'package:will_i_make_it/l10n/l10n.dart';
 
 class App extends StatelessWidget {
@@ -15,7 +16,7 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const Scaffold(body: SizedBox.shrink()),
+      home: const HomePage(),
     );
   }
 }
