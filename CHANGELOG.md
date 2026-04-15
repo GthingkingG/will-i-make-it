@@ -2,6 +2,7 @@
 
 이 프로젝트의 변경 이력. `[태그]` 커밋에 대해 `post-commit` 훅이 자동 기록.
 
+- `2026-04-15` **[Chore]** CHANGELOG 자동 갱신 동기화 (Phase 2 dispatch 직전) (`3832907`)
 - `2026-04-15` **[Chore]** SESSION.md 자동 덮어쓰기 제거 + Phase 2 핸드오프 메모 (`4933e6a`)
 - `2026-04-15` **[Docs]** v0.1 UI + CI 스트림 실행 플랜 (`e77b3fb`)
 - `2026-04-15` **[Chore]** Claude Code 하네스 셋업 (.claude/ + CLAUDE.md) (`f66a180`)
