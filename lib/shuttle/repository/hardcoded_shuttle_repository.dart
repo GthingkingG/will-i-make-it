@@ -17,7 +17,7 @@ class HardcodedShuttleRepository implements ShuttleRepository {
       return null;
     }
     final nearest = _nearestStop(latitude, longitude);
-    final departures = weekdayDepartures(now);
+    final departures = departuresForStop(nearest.id, now);
     DateTime? next;
     for (final d in departures) {
       if (d.isAfter(now)) {
@@ -29,7 +29,7 @@ class HardcodedShuttleRepository implements ShuttleRepository {
     return ShuttleSchedule(
       stop: nearest,
       nextDeparture: next,
-      routeName: '서울캠 내부순환',
+      routeName: routeNameForStop(nearest.id),
     );
   }
 
