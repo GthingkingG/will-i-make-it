@@ -48,5 +48,33 @@
     "homeNoShuttlesToday": "No more shuttles today",
     "@homeNoShuttlesToday": {
         "description": "Shown when no upcoming shuttle departures today"
+    },
+    "scheduleTitle": "Schedule",
+    "@scheduleTitle": {
+        "description": "Schedule page app bar title"
+    },
+    "scheduleTabUpbound": "Upbound",
+    "@scheduleTabUpbound": {
+        "description": "Upbound tab label (jiseokmyo to inmun-gyeongsang)"
+    },
+    "scheduleTabDownbound": "Downbound",
+    "@scheduleTabDownbound": {
+        "description": "Downbound tab label (inmun-gyeongsang to jiseokmyo)"
+    },
+    "scheduleNextBadge": "Next",
+    "@scheduleNextBadge": {
+        "description": "Label next to the upcoming departure time"
+    },
+    "scheduleEmpty": "No service today",
+    "@scheduleEmpty": {
+        "description": "Shown when no departures for today (weekend, off-season)"
+    },
+    "scheduleRouteUpbound": "Jiseokmyo → Humanities",
+    "@scheduleRouteUpbound": {
+        "description": "Upbound route description shown under the tab"
+    },
+    "scheduleRouteDownbound": "Humanities → Jiseokmyo",
+    "@scheduleRouteDownbound": {
+        "description": "Downbound route description shown under the tab"
     }
 }
