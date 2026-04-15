@@ -12,10 +12,10 @@ class HomeCubit extends Cubit<HomeState> {
     required LocationService locationService,
     required ShuttleRepository shuttleRepository,
     DateTime Function()? clock,
-  })  : _location = locationService,
-        _shuttle = shuttleRepository,
-        _clock = clock ?? DateTime.now,
-        super(const HomeInitial());
+  }) : _location = locationService,
+       _shuttle = shuttleRepository,
+       _clock = clock ?? DateTime.now,
+       super(const HomeInitial());
 
   final LocationService _location;
   final ShuttleRepository _shuttle;

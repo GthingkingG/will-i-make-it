@@ -38,10 +38,10 @@ void main() {
   });
 
   HomeCubit buildCubit() => HomeCubit(
-        locationService: location,
-        shuttleRepository: shuttle,
-        clock: () => fixedNow,
-      );
+    locationService: location,
+    shuttleRepository: shuttle,
+    clock: () => fixedNow,
+  );
 
   group('HomeCubit.start', () {
     blocTest<HomeCubit, HomeState>(

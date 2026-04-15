@@ -13,8 +13,7 @@ class HardcodedShuttleRepository implements ShuttleRepository {
     required double longitude,
     required DateTime now,
   }) async {
-    if (now.weekday == DateTime.saturday ||
-        now.weekday == DateTime.sunday) {
+    if (now.weekday == DateTime.saturday || now.weekday == DateTime.sunday) {
       return null;
     }
     final nearest = _nearestStop(latitude, longitude);

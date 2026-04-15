@@ -49,8 +49,9 @@ void main() {
     expect(find.text('권한 설정 열기'), findsOneWidget);
   });
 
-  testWidgets('permission button calls start when not permanent',
-      (tester) async {
+  testWidgets('permission button calls start when not permanent', (
+    tester,
+  ) async {
     when(() => cubit.state).thenReturn(
       const HomePermissionDenied(permanent: false),
     );
@@ -68,8 +69,9 @@ void main() {
     verify(cubit.start).called(1);
   });
 
-  testWidgets('permission button opens settings when permanent',
-      (tester) async {
+  testWidgets('permission button opens settings when permanent', (
+    tester,
+  ) async {
     when(() => cubit.state).thenReturn(
       const HomePermissionDenied(permanent: true),
     );
@@ -87,8 +89,9 @@ void main() {
     verify(cubit.openSystemSettings).called(1);
   });
 
-  testWidgets('renders tracking view with probability + fallback',
-      (tester) async {
+  testWidgets('renders tracking view with probability + fallback', (
+    tester,
+  ) async {
     final now = DateTime(2026, 4, 16, 9);
     when(() => cubit.state).thenReturn(
       HomeTracking(
@@ -152,8 +155,7 @@ void main() {
     expect(find.text('다음 셔틀 놓칠 가능성 높음'), findsOneWidget);
   });
 
-  testWidgets('renders GPS badge when isGpsAccurate is false',
-      (tester) async {
+  testWidgets('renders GPS badge when isGpsAccurate is false', (tester) async {
     final now = DateTime(2026, 4, 16, 9);
     when(() => cubit.state).thenReturn(
       HomeTracking(

@@ -14,8 +14,9 @@ Widget _wrap(Widget child, {Locale locale = const Locale('ko')}) {
 
 void main() {
   group('FallbackCard', () {
-    testWidgets('displays title, minutes and stop name in Korean',
-        (tester) async {
+    testWidgets('displays title, minutes and stop name in Korean', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         _wrap(
           const FallbackCard(minutesUntilDeparture: 18, stopName: '정문'),

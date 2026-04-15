@@ -30,18 +30,16 @@ class ProbabilityRing extends StatelessWidget {
           child: CustomPaint(
             painter: _RingPainter(
               value: animated,
-              trackColor: Theme.of(context)
-                  .colorScheme
-                  .surfaceContainerHighest,
+              trackColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               fillColor: color,
             ),
             child: Center(
               child: Text(
                 '${(animated * 100).round()}%',
-                style: Theme.of(context)
-                    .textTheme
-                    .displayLarge
-                    ?.copyWith(color: color, fontWeight: FontWeight.w700),
+                style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
