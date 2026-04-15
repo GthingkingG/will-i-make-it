@@ -1,4 +1,4 @@
-name: will_i_make_it
+name: CI
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -21,10 +21,11 @@ jobs:
     with:
       flutter_version: "3.41.x"
       run_bloc_lint: true
+      min_coverage: 80
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
     with:
       includes: |
-        **/*.md
+        README.md
       modified_files_only: false

@@ -15,14 +15,23 @@
     }
   ],
   "useGitignore": true,
+  "ignoreRegExpList": [
+    "/[\\p{Script=Hangul}]+/gu"
+  ],
   "words": [
-    "Contador",
-    "localizable",
-    "mostrado",
-    "página",
-    "Texto",
-    "Hola",
-    "Mundo",
-    "Saludo"
+    "HUFS",
+    "gstack",
+    "superpowers",
+    "verygood",
+    "verygoodventures",
+    "Supabase",
+    "Fastlane",
+    "TestFlight",
+    "bloc",
+    "cubit",
+    "geolocator",
+    "permission handler",
+    "pubspec",
+    "lcov"
   ]
 }
