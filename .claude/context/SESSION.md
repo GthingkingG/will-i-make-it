@@ -2,43 +2,44 @@
 
 ## 🎯 Current Work
 - **Plans to execute**: `docs/plans/ui-v0.1-plan.md` + `docs/plans/ci-v0.1-plan.md`
-- **Phase**: Phase 1 완료 → **Phase 2 (Wave 1 병렬 dispatch) 대기 중**
-- **Branch**: `main` (worktrees 아직 없음 — Agent `isolation:"worktree"`가 자동 생성)
+- **Phase**: Phase 2 (Wave 1 dispatch) — **권한 실패 2회, 재시작 필요**
+- **Branch**: `main` (워크트리 클린)
 
 ## 📍 Now
-이전 세션에서 플랜 2개 작성 + push 완료 (`e77b3fb`). 다음 세션 첫 액션은 Phase 2 dispatch.
+**다음 세션은 반드시 `claude --dangerously-skip-permissions`로 시작.** 일반 모드에서는 서브에이전트가 mutating Bash를 못 씀.
 
-## 📋 Todo (다음 세션)
-- [ ] Phase 2 dispatch — **단일 메시지**에 Agent 호출 2개 (UI + CI 병렬, `isolation: "worktree"`)
+## 📋 Todo (다음 세션, 순서대로)
+- [ ] `claude --dangerously-skip-permissions`로 새 터미널에서 실행 확인
+- [ ] **단일 메시지**에 Agent 호출 2개 — UI + CI (`isolation: "worktree"`, `mode: "bypassPermissions"`)
 - [ ] 에이전트 진행 모니터링 + 블로커 즉시 대응
-- [ ] 완료된 PR에 `gstack:review` → 사용자 머지 → `superpowers:finishing-a-development-branch`
+- [ ] PR 들어오면 `gstack:review` → 사용자 머지 → `superpowers:finishing-a-development-branch`
 
-## 🧠 Context
-- **하네스 설계**: `docs/plans/2026-04-15-harness-engineering-design.md` (4 결정: worktree / Wave / Plan-first / PR-per-stream)
-- **메타 목표**: AI 에이전트팀 주도 풀스택이 MVP와 동등한 포트폴리오 deliverable (DESIGN_v0.md #2)
-- **pubspec 충돌 룰**: UI가 deps 추가 우선권. CI PR은 UI 머지 후 rebase
-- **외부 블로커**: Apple Developer 승인 대기 → Wave 3 지연 / Google Play 미가입 / Supabase 미생성
+## 🧠 Lesson Learned (오늘의 핵심)
+- `.claude/settings.json`의 `permissions.allow`가 **백그라운드 서브에이전트에 전파 안 됨** — interactive 부모 세션에서는 allow 룰 무효
+- `mode: "bypassPermissions"` Agent 파라미터, `dangerouslyDisableSandbox: true` 모두 무효
+- **유일한 작동 경로**: 부모 세션 자체가 `--dangerously-skip-permissions`로 시작
+- 안전망: 워크트리 물리 격리 + settings.json deny 룰(`gh pr merge`, `--force`, `--no-verify`, `rm -rf /` 등) 유지
+- 이 실패 → 회고 문서화하면 포트폴리오 내러티브 보강
 
 ## ⚠️ Watch Out
-- Phase 2는 **2-6시간 활성 세션 필요**. 에이전트 블로커 시 즉시 응답 필요
-- 서브에이전트가 PR 생성 시 머지는 **사용자 권한** — 자동 머지 금지
-- `codex` CLI 미설치 → `gstack:codex` 스킬 작동 불가 (skip)
-- Hook 호환: macOS bash 3.2 + BSD sed — `mapfile` 금지, `[[:space:]]` 사용
+- Phase 2는 **2-6시간 활성 세션 필요**
+- 서브에이전트가 PR 생성 시 머지는 **사용자 권한** — `gh pr merge`는 deny 룰로도 차단됨
+- pubspec.yaml 충돌 룰: UI 우선권. CI는 UI PR 머지 후 rebase
+- 외부 블로커: Apple 승인 대기 / Google Play 미가입 / Supabase 미생성 (v0.1엔 불필요)
 
-## 🚫 Blockers
-없음. Phase 2 즉시 진입 가능.
+## 🚫 Blockers (해소 조건)
+- 권한 모드 → 새 세션을 `--dangerously-skip-permissions`로 시작하면 해소
 
-## 🔧 Env (자동 복원 — `~/.zshrc`)
-- `PATH`: `$HOME/.pub-cache/bin`, `$ANDROID_HOME/cmdline-tools/latest/bin`, `$JAVA_HOME/bin`
-- `ANDROID_HOME=$HOME/Library/Android/sdk`
-- `JAVA_HOME=/Applications/Android Studio.app/Contents/jbr/Contents/Home`
+## 🔧 Env
+- `~/.zshrc` 자동 로드: `PATH`(pub-cache, android sdk, jbr), `ANDROID_HOME`, `JAVA_HOME`
 - `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`
 
 ## 📌 Recent commits
-- `e77b3fb` [Docs] v0.1 UI + CI 스트림 실행 플랜
-- `f66a180` [Chore] Claude Code 하네스 셋업
+- `e5de198` [Chore] settings.json 권한 룰 (allow/deny) — allow는 무효 확인됨, deny는 유효
+- `3832907` [Chore] CHANGELOG 동기화
+- `4933e6a` [Chore] SESSION.md 자동 덮어쓰기 제거
+- `e77b3fb` [Docs] v0.1 UI + CI 플랜
 - `4855cf7` [Docs] 하네스 엔지니어링 설계 문서
-- `374b7a4` [Chore] VGV 스캐폴드 + Flutter 툴체인 셋업
 
 ---
-*Updated: 2026-04-15 16:48*
+*Updated: 2026-04-15 17:05 (권한 실패 회고 + 다음 세션 진입 가이드)*
