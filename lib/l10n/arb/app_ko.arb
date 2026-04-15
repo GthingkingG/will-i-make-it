@@ -76,5 +76,41 @@
     "scheduleRouteDownbound": "인문경상관 → 지석묘 앞",
     "@scheduleRouteDownbound": {
         "description": "Downbound route description shown under the tab"
+    },
+    "settingsTitle": "설정",
+    "@settingsTitle": {
+        "description": "Settings page app bar title"
+    },
+    "settingsLocationStatusHeader": "위치 권한",
+    "@settingsLocationStatusHeader": {
+        "description": "Header of the location permission card"
+    },
+    "settingsLocationDescription": "셔틀까지의 거리와 탑승 확률을 계산하는 데 사용됩니다.",
+    "@settingsLocationDescription": {
+        "description": "Why the app needs location, shown in Settings"
+    },
+    "settingsLocationStatusGranted": "허용됨",
+    "@settingsLocationStatusGranted": {
+        "description": "Status shown when permission is granted"
+    },
+    "settingsLocationStatusDenied": "거부됨",
+    "@settingsLocationStatusDenied": {
+        "description": "Status shown when permission was denied (can re-request)"
+    },
+    "settingsLocationStatusDeniedForever": "영구 거부됨",
+    "@settingsLocationStatusDeniedForever": {
+        "description": "Status shown when permission was permanently denied"
+    },
+    "settingsLocationStatusServiceDisabled": "위치 서비스 꺼짐",
+    "@settingsLocationStatusServiceDisabled": {
+        "description": "Status shown when the OS location service is off"
+    },
+    "settingsLocationActionRequest": "권한 요청",
+    "@settingsLocationActionRequest": {
+        "description": "Button to trigger the OS permission prompt"
+    },
+    "settingsLocationActionOpenSettings": "OS 설정 열기",
+    "@settingsLocationActionOpenSettings": {
+        "description": "Button to open the OS-level app settings"
     }
 }

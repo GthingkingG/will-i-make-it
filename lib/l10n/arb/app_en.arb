@@ -76,5 +76,41 @@
     "scheduleRouteDownbound": "Humanities → Jiseokmyo",
     "@scheduleRouteDownbound": {
         "description": "Downbound route description shown under the tab"
+    },
+    "settingsTitle": "Settings",
+    "@settingsTitle": {
+        "description": "Settings page app bar title"
+    },
+    "settingsLocationStatusHeader": "Location permission",
+    "@settingsLocationStatusHeader": {
+        "description": "Header of the location permission card"
+    },
+    "settingsLocationDescription": "Used to estimate distance to the stop and your boarding probability.",
+    "@settingsLocationDescription": {
+        "description": "Why the app needs location, shown in Settings"
+    },
+    "settingsLocationStatusGranted": "Granted",
+    "@settingsLocationStatusGranted": {
+        "description": "Status shown when permission is granted"
+    },
+    "settingsLocationStatusDenied": "Denied",
+    "@settingsLocationStatusDenied": {
+        "description": "Status shown when permission was denied (can re-request)"
+    },
+    "settingsLocationStatusDeniedForever": "Permanently denied",
+    "@settingsLocationStatusDeniedForever": {
+        "description": "Status shown when permission was permanently denied"
+    },
+    "settingsLocationStatusServiceDisabled": "Location services off",
+    "@settingsLocationStatusServiceDisabled": {
+        "description": "Status shown when the OS location service is off"
+    },
+    "settingsLocationActionRequest": "Request permission",
+    "@settingsLocationActionRequest": {
+        "description": "Button to trigger the OS permission prompt"
+    },
+    "settingsLocationActionOpenSettings": "Open OS settings",
+    "@settingsLocationActionOpenSettings": {
+        "description": "Button to open the OS-level app settings"
     }
 }

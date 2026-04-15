@@ -10,6 +10,7 @@ import 'package:will_i_make_it/home/view/widgets/probability_ring.dart';
 import 'package:will_i_make_it/l10n/l10n.dart';
 import 'package:will_i_make_it/location/location.dart';
 import 'package:will_i_make_it/schedule/schedule.dart';
+import 'package:will_i_make_it/settings/settings.dart';
 import 'package:will_i_make_it/shuttle/shuttle.dart';
 
 /// Top-level "Will I make it?" screen.
@@ -61,6 +62,20 @@ class HomeView extends StatelessWidget {
                 builder: (_) => SchedulePage(now: DateTime.now()),
               ),
             ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: context.l10n.settingsTitle,
+            onPressed: () async {
+              await Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => const SettingsPage(),
+                ),
+              );
+              // 사용자가 설정에서 권한을 바꾸고 돌아왔다면 홈을 재시작.
+              if (!context.mounted) return;
+              await context.read<HomeCubit>().start();
+            },
           ),
         ],
       ),
