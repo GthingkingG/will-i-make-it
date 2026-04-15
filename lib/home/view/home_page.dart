@@ -9,6 +9,7 @@ import 'package:will_i_make_it/home/view/widgets/gps_badge.dart';
 import 'package:will_i_make_it/home/view/widgets/probability_ring.dart';
 import 'package:will_i_make_it/l10n/l10n.dart';
 import 'package:will_i_make_it/location/location.dart';
+import 'package:will_i_make_it/schedule/schedule.dart';
 import 'package:will_i_make_it/shuttle/shuttle.dart';
 
 /// Top-level "Will I make it?" screen.
@@ -49,7 +50,20 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.homeTitle)),
+      appBar: AppBar(
+        title: Text(context.l10n.homeTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.schedule),
+            tooltip: context.l10n.scheduleTitle,
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => SchedulePage(now: DateTime.now()),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) => switch (state) {
           HomeInitial() => const Center(child: CircularProgressIndicator()),

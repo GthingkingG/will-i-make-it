@@ -48,5 +48,33 @@
     "homeNoShuttlesToday": "오늘 남은 셔틀 없음",
     "@homeNoShuttlesToday": {
         "description": "Shown when no upcoming shuttle departures today"
+    },
+    "scheduleTitle": "시간표",
+    "@scheduleTitle": {
+        "description": "Schedule page app bar title"
+    },
+    "scheduleTabUpbound": "상행",
+    "@scheduleTabUpbound": {
+        "description": "Upbound tab label (jiseokmyo to inmun-gyeongsang)"
+    },
+    "scheduleTabDownbound": "하행",
+    "@scheduleTabDownbound": {
+        "description": "Downbound tab label (inmun-gyeongsang to jiseokmyo)"
+    },
+    "scheduleNextBadge": "다음",
+    "@scheduleNextBadge": {
+        "description": "Label next to the upcoming departure time"
+    },
+    "scheduleEmpty": "오늘은 운행하지 않습니다",
+    "@scheduleEmpty": {
+        "description": "Shown when no departures for today (weekend, off-season)"
+    },
+    "scheduleRouteUpbound": "지석묘 앞 → 인문경상관",
+    "@scheduleRouteUpbound": {
+        "description": "Upbound route description shown under the tab"
+    },
+    "scheduleRouteDownbound": "인문경상관 → 지석묘 앞",
+    "@scheduleRouteDownbound": {
+        "description": "Downbound route description shown under the tab"
     }
 }
