@@ -1,4 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// Tests spell out walkingSpeedMps explicitly even when it matches the default
+// so the numeric scenarios stay readable.
+// ignore_for_file: avoid_redundant_argument_values
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:will_i_make_it/probability/probability.dart';
