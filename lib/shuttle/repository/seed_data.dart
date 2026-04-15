@@ -23,6 +23,18 @@ const List<ShuttleStop> allStops = [jiseokmyoStop, inmunGyeongsangStop];
 const String routeUpbound = '지석묘 → 인문경상관 (상행)';
 const String routeDownbound = '인문경상관 → 지석묘 (하행)';
 
+/// 운영 시작일 (inclusive). 2026학년도 1학기 개시.
+// ignore: avoid_redundant_argument_values
+final DateTime serviceValidFrom = DateTime(2026, 4, 1);
+
+/// 운영 종료 다음날 00:00 (exclusive). 마지막 운영일은 2026-06-22 (월).
+final DateTime serviceValidUntil = DateTime(2026, 6, 23);
+
+/// `now`가 운영기간 내부인지. 평일 체크는 별도.
+bool isWithinServicePeriod(DateTime now) {
+  return !now.isBefore(serviceValidFrom) && now.isBefore(serviceValidUntil);
+}
+
 /// 상행 (지석묘 앞 → 인문경상관) 출발시각. 15:15 미운영.
 const List<(int, int)> _upboundTimes = [
   (8, 20),
