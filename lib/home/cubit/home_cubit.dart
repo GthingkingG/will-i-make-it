@@ -22,11 +22,24 @@ class HomeCubit extends Cubit<HomeState> {
   final DateTime Function() _clock;
   StreamSubscription<LocationSnapshot>? _positionSub;
 
+  /// Default timeout for the permission prompt. On Android the OS-level
+  /// Location Accuracy dialog can delay or swallow the app-level request;
+  /// we'd rather show a recoverable error than leave users on a spinner.
+  static const Duration permissionTimeout = Duration(seconds: 15);
+
   /// Kicks off the permission flow and then the position stream.
   /// Safe to call multiple times; the earlier subscription is cancelled.
   // ignore: prefer_void_public_cubit_methods
   Future<void> start() async {
-    final status = await _location.ensurePermission();
+    final LocationPermissionStatus status;
+    try {
+      status = await _location.ensurePermission().timeout(permissionTimeout);
+    } on TimeoutException {
+      if (isClosed) return;
+      emit(const HomePermissionDenied(permanent: false));
+      return;
+    }
+    if (isClosed) return;
     switch (status) {
       case LocationPermissionStatus.granted:
         await _startTracking();
