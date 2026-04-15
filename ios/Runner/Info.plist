@@ -4,9 +4,11 @@
 <dict>
 	<key>CFBundleLocalizations</key>
 	<array>
+		<string>ko</string>
 		<string>en</string>
-		<string>es</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>현재 위치에서 셔틀 정류장까지의 거리와 탑승 확률을 계산하기 위해 위치 정보를 사용합니다.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
