@@ -21,6 +21,24 @@ void main() {
       expect(result.routeName, isNotEmpty);
     });
 
+    test('returns null on Saturday (no weekend service)', () async {
+      final result = await repo.findNextDeparture(
+        latitude: 37.5973,
+        longitude: 127.0589,
+        now: DateTime(2026, 4, 18, 9),
+      );
+      expect(result, isNull);
+    });
+
+    test('returns null on Sunday (no weekend service)', () async {
+      final result = await repo.findNextDeparture(
+        latitude: 37.5973,
+        longitude: 127.0589,
+        now: DateTime(2026, 4, 19, 9),
+      );
+      expect(result, isNull);
+    });
+
     test('picks nearer stop (dorms) when closer to dorms', () async {
       final result = await repo.findNextDeparture(
         latitude: 37.5985,

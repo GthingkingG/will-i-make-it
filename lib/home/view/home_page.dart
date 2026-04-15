@@ -73,7 +73,7 @@ class TrackingView extends StatelessWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final seconds = state.schedule.secondsUntilDepartureFrom(state.now);
-    final minutes = seconds <= 0 ? 0 : (seconds / 60).round();
+    final minutes = seconds <= 0 ? 0 : (seconds / 60).floor();
     final willMakeIt = state.probability >= 0.5;
 
     return SafeArea(

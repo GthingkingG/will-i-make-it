@@ -53,6 +53,7 @@ class HomeCubit extends Cubit<HomeState> {
       longitude: snap.longitude,
       now: now,
     );
+    if (isClosed) return;
     if (schedule == null) {
       emit(const HomeNoShuttlesToday());
       return;
