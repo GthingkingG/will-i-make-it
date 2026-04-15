@@ -24,6 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   /// Kicks off the permission flow and then the position stream.
   /// Safe to call multiple times; the earlier subscription is cancelled.
+  // ignore: prefer_void_public_cubit_methods
   Future<void> start() async {
     final status = await _location.ensurePermission();
     switch (status) {
@@ -39,6 +40,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   /// Opens OS-level permission settings. Returns `true` if the settings page
   /// was opened. After returning the caller typically re-invokes [start].
+  // ignore: prefer_void_public_cubit_methods
   Future<bool> openSystemSettings() => _location.openSystemSettings();
 
   Future<void> _startTracking() async {
