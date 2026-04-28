@@ -148,3 +148,7 @@ node_modules/
 
 # Backup files
 pubspec.lock.bak
+
+# Xcode 표준 보강 (Phase E, 2026-04-29)
+xcuserdata/
+*.xcuserstate
